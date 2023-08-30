@@ -3,7 +3,6 @@ import Seats from "./Seats.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {SetSuccess} from "../../redux/features/bogie/bogieSlice.js";
 import {GetBogieRequest} from "../../ApiServices/BlogApiRequest.js";
-import {SuccessToast} from "../../helper/ValidationHelper.js";
 
 const BogieLists = ({bogies}) => {
     const dispatch = useDispatch();

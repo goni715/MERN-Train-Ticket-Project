@@ -29,13 +29,16 @@ const SearchPage = () => {
             <div key={i.toString()} className="p-5">
                 <h1>TrainName: {item?.name}</h1>
 
-                <div className="d-flex gap-3">
+                <div className="d-flex gap-5">
                     {item?.Classes && (
                         item?.Classes.map((clas, index)=>(
                             <>
-                                <button key={index.toString()} onClick={()=>navigate(`/class/${clas?._id}/${from}/${to}/${date}`)} className="btn btn-primary">
-                                    {clas?.name}
-                                </button>
+                                <div key={index.toString()} className="d-flex flex-column">
+                                    <button onClick={()=>navigate(`/class/${clas?._id}/${from}/${to}/${date}`)} className="btn btn-primary">
+                                        {clas?.name}
+                                    </button>
+                                    <h5>{clas?.vara} Taka</h5>
+                                </div>
                             </>
                         ))
                     )

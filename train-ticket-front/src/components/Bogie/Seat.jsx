@@ -1,8 +1,11 @@
 import {useParams} from "react-router-dom";
 import {useBookingSeatMutation} from "../../redux/features/bogie/bogieApi.js";
+import {useDispatch} from "react-redux";
+import {SeatBook} from "../../redux/features/auth/authSlice.js";
 
 const Seat = ({item}) => {
     const {date} = useParams();
+    const dispatch = useDispatch();
     const [bookingSeat, {isLoading, isSuccess}] = useBookingSeatMutation();
 
     const handleBooking = (seatId) => {
@@ -13,6 +16,9 @@ const Seat = ({item}) => {
                 date:date
             }
        })
+
+        dispatch(SeatBook());
+
 
     }
 

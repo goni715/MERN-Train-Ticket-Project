@@ -4,7 +4,8 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     accessToken: undefined,
     user: undefined,
-    error: ""
+    error: "",
+    seats: ""
 }
 
 
@@ -23,12 +24,18 @@ const authSlice = createSlice({
         SetAuthError: (state,action) => {
             state.error=action.payload;
             console.log(action.payload);
+        },
+        SetSeats: (state, action)=>{
+            state.seats=action.payload
+        },
+        SeatBook: (state)=>{
+           state.seats=state.seats-1;
         }
     }
 })
 
 
 
-export const {userLoggedIn, userLoggedOut, SetAuthError} = authSlice.actions;
+export const {userLoggedIn, userLoggedOut, SetAuthError, SetSeats, SeatBook} = authSlice.actions;
 const authSliceReducer = authSlice.reducer;
 export default authSliceReducer;
