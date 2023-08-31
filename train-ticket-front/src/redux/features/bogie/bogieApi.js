@@ -9,8 +9,8 @@ export const bogieApi = apiSlice.injectEndpoints({
             query: (id) => `/bogie/get-bogie/${id}`,
         }),
         bookingSeat: builder.mutation({
-            query: ({id, data}) => ({
-                url: `/bogie/booking-seat/${id}`,
+            query: ({seatId, classId, data}) => ({
+                url: `/bogie/booking-seat/${seatId}/${classId}`,
                 method: "PATCH",
                 body: data
             }),
@@ -24,6 +24,7 @@ export const bogieApi = apiSlice.injectEndpoints({
                     ErrorToast("Booking Failed");
                 }
             },
+            invalidatesTags:["Classes"]
         }),
     }),
 })

@@ -25,5 +25,5 @@ exports.GetBogie=async (req, res) => {
 
 //Booking a Seat
 exports.BookingSeat=async (req, res) => {
-    await BookingSeatService(req,res,BogieModel)
+    await BookingSeatService(req,res,BogieModel, ClassModel)
 }

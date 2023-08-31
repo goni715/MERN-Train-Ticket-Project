@@ -5,8 +5,9 @@ import Navigation from "../components/navigation/Navigation.jsx";
 const SearchPage = () => {
     const navigate = useNavigate();
     const {to, from, date} = useParams();
-    const {data, isLoading, isError} = useSearchTrainQuery({from, to});
+    const {data, isLoading, isError} = useSearchTrainQuery({from, to, date});
     const trains = data?.data;
+    const order = data?.order;
 
    //decision how to render
     let content = null;
@@ -34,8 +35,11 @@ const SearchPage = () => {
                         item?.Classes.map((clas, index)=>(
                             <>
                                 <div key={index.toString()} className="d-flex flex-column">
-                                    <button onClick={()=>navigate(`/class/${clas?._id}/${from}/${to}/${date}`)} className="btn btn-primary">
+                                    <button type="button" onClick={()=>navigate(`/class/${clas?._id}/${from}/${to}/${date}/${order}`)} className="btn btn-primary">
                                         {clas?.name}
+                                        <span style={{backgroundColor: "#ab1515cf", marginLeft:"5px"}} className="badge badge-light">
+                                            {clas?.fakaSeats}
+                                        </span>
                                     </button>
                                     <h5>{clas?.vara} Taka</h5>
                                 </div>

@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.post("/create-class/:trainId", ClassController.CreateClass)
-router.get("/get-class/:id/:from/:to",ClassController.GetClass);
+router.get("/get-class/:id/:from/:to/:date",ClassController.GetClass);
 router.get("/get-all-classes",ClassController.GetAllClasses);
 
 

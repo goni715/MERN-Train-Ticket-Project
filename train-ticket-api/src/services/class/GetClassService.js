@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const VaraModel = require("../../models/Vara/VaraModel");
-const ClassModel = require("../../models/Class/ClassModel");
 const GetClassService = async (req, res, ClassModel) => {
 
     try{
         const ID = req.params['id'];
         const from = req.params['from'];
         const to = req.params['to'];
+        const date = req.params['date'];
         const ObjectId = mongoose.Types.ObjectId;
 
         const data = await ClassModel.aggregate([
@@ -15,40 +15,58 @@ const GetClassService = async (req, res, ClassModel) => {
         ])
 
 
+        //getVara or fare
         const vara = await VaraModel.aggregate([
             {$match: {fromToCity: { $all: [from, to] }, classId: new ObjectId(ID)}},
         ]);
 
 
-        let result = await ClassModel.aggregate([
-            {
-                $match: {
-                    _id: new ObjectId(ID),
-                }
-            },
-            {$lookup: {from: "bogies", localField: "bogies", foreignField: "_id", as: "Bogies"}},
-            {$project: {bogies:1, Bogies:1}}
-        ])
-
-        const Bogies = result[0]?.Bogies;
-        let totalSeats =0;
+        //find all seats & find total seats part
+        const Bogies = data[0]?.Bogies;
+        let totalSeats = 0;
         let seats = [];
         let bookSeats;
 
         if(Bogies?.length > 0){
            for(let i=0; i< Bogies.length; i++){
                seats= [...seats, ...Bogies[i]?.seats];
-               totalSeats += Bogies[i]?.seats.length;
+               totalSeats += Bogies[i]?.totalSeats;
            }
         }
 
 
         if(seats.length > 0){
             const result2 = seats.filter(({unavailableDates})=> {
-                return unavailableDates?.find((cv)=> cv.date === "2023-08-30");
+                return unavailableDates?.find((cv)=> cv.date === date);
             })
             bookSeats=result2.length;
         }
+        //find all seats & find total seats part
+
+
+
+       //Bogie Faka Seats part start
+        if(Bogies?.length > 0){
+            for(let i=0; i< Bogies.length; i++){
+                let bogieSeats = Bogies[i]?.seats;
+                let bogieBookSeats;
+
+                if(bogieSeats.length >0){
+                    let result = bogieSeats.filter(({unavailableDates})=> {
+                        return unavailableDates?.find((cv)=> cv.date === date);
+                    })
+                    bogieBookSeats=result.length;
+                }
+                Bogies[i].FakaSeats= Number(Bogies[i]?.totalSeats- Number(bogieBookSeats));
+            }
+        }
+        //Bogie Faka Seats part ended
+
+
+
+
+
+
 
 
 

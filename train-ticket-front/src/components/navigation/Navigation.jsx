@@ -1,7 +1,6 @@
 import {useNavigate} from "react-router-dom";
 
 const Navigation = () => {
-
     const navigate = useNavigate();
     return (
         <>

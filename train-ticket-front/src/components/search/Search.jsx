@@ -32,7 +32,18 @@ const options = [
     "Rajshahi",
     "Ullapara",
     "Joydebpur",
-    "Dhaka Bimanbandor"
+    "Dhaka Bimanbandor",
+    "B Sirajul Islam",
+    "Kismat",
+    "Ruhia",
+    "Thakurgaon_Road",
+    "Pirganj",
+    "Setabganj",
+    "Dinajpur",
+    "Chirirbandar",
+    "Panchbibi",
+    "BBSetu_E",
+    "Tangail"
 ];
 const Search = () => {
    const [from, setFrom] = useState("");
@@ -42,23 +53,20 @@ const Search = () => {
     const navigate = useNavigate();
 
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if(from && to){
             // const myDate = selectedDate.toLocaleDateString().slice(0,10);
             const myDate = selectedDate.toISOString().slice(0,10);//UTC Time //InterNational Time
             navigate(`/search/${from}/${to}/${myDate}`);
+        }else{
+            alert("Please enter correct station name (or choose from suggested stations)")
         }
     }
 
     return (
 
         <>
-
-
-
-
             <br/><br/>
             <div className="p-5">
               <form onSubmit={handleSubmit}>

@@ -12,6 +12,10 @@ const BogieSchema = new mongoose.Schema(
             required:true,
             unique:true,
         },
+        totalSeats: {
+            type:Number,
+            required:true
+        },
         seats: [
             {
                 number: String,

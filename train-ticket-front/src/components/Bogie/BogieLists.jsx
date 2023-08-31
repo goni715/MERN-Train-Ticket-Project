@@ -23,6 +23,7 @@ const BogieLists = ({bogies}) => {
         })();
     },[bogieId, isSuccess, dispatch])
     const handleClick = async (id) => {
+        setSeats([]);
         let result = await GetBogieRequest(id);
         setSeats(result);
         setBogiId(id);
@@ -30,19 +31,38 @@ const BogieLists = ({bogies}) => {
 
 
 
+    //bogie-sorting
+    const sorting = (a,b) => {
+            let x = a.name.toLowerCase();
+            let y = b.name.toLowerCase();
+            if (x < y) {return -1;}
+            if (x > y) {return 1;}
+            return 0;
+    }
+
 
 
     return (
         <>
             <div className="d-flex gap-3">
             {bogies && (
-                bogies?.map((bogie, index)=>(
-                    <>
-                      <button onClick={()=>handleClick(bogie?._id)} className="btn btn-primary">
-                          {bogie?.name}
-                       </button>
-                    </>
-                ))
+                bogies
+                .slice()
+                    .sort((a,b)=>sorting(a,b))
+                .map((bogie, index)=> {
+                    return(
+                        <>
+                            <button onClick={() => handleClick(bogie?._id)} className="btn btn-primary">
+                                {bogie?.name}
+
+                                <span style={{backgroundColor: "#ab1515cf", marginLeft: "5px"}}
+                                      className="badge badge-light">
+                                            {bogie?.FakaSeats}
+                          </span>
+                            </button>
+                        </>
+                      )
+                })
             )
 
             }

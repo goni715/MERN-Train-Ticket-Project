@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/create-train", TrainController.CreateTrain)
 router.get("/get-train/:id",TrainController.GetTrain);
 router.get("/get-all-trains",TrainController.GetAllTrains);
-router.get("/search-train/:from/:to",TrainController.SearchTrain);
+router.get("/search-train/:from/:to/:date",TrainController.SearchTrain);
 
 
 

@@ -4,22 +4,21 @@ import {useDispatch} from "react-redux";
 import {SeatBook} from "../../redux/features/auth/authSlice.js";
 
 const Seat = ({item}) => {
-    const {date} = useParams();
+    const {id,date, order} = useParams();
     const dispatch = useDispatch();
     const [bookingSeat, {isLoading, isSuccess}] = useBookingSeatMutation();
 
     const handleBooking = (seatId) => {
        bookingSeat({
-            id:seatId,
+            seatId,
+            classId:id,
             data: {
                 name: "Marjan Hossain",
-                date:date
+                date:`${date}-${order}`
             }
        })
 
         dispatch(SeatBook());
-
-
     }
 
 
@@ -27,8 +26,8 @@ const Seat = ({item}) => {
         <>
             <button
                 onClick={()=>handleBooking(item?._id)}
-                className={item?.unavailableDates.find((cv)=> cv.date === date) && "btn btn-danger" || "btn btn-success"}
-                disabled={item?.unavailableDates.find((cv)=> cv.date === date) || isLoading }
+                className={item?.unavailableDates.find((cv)=> cv.date === `${date}-${order}`) && "btn btn-danger" || "btn btn-success"}
+                disabled={item?.unavailableDates.find((cv)=> cv.date === `${date}-${order}`) || isLoading }
             >
                 {item?.number}
             </button>

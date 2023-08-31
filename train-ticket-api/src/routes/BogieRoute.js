@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/create-bogie/:classId", BogieController.CreateBogie)
 router.get("/get-all-bogies",BogieController.GetAllBogies);
 router.get("/get-bogie/:id",BogieController.GetBogie);
-router.patch("/booking-seat/:seatId", BogieController.BookingSeat);
+router.patch("/booking-seat/:seatId/:classId", BogieController.BookingSeat);
 
 
 

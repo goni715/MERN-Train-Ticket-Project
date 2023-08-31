@@ -6,8 +6,8 @@ import {useState} from "react";
 import {useSelector} from "react-redux";
 
 const ClassPage = () => {
-    const {id, from, to} = useParams();
-    const {data, isLoading, isError} = useGetClassQuery({id, from, to});
+    const {id, from, to, date, order} = useParams();
+    const {data, isLoading, isError} = useGetClassQuery({id, from, to, date:`${date}-${order}`});
     const classData = data?.data;
     const {name, Bogies} = classData || {};
     const {vara,} = data || {};
