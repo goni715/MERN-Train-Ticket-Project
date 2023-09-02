@@ -72,7 +72,7 @@ const TrainLists = () => {
             {content}
             <div className="p-5">
                 <h3 className="mb-4 title">Train Lists</h3>
-                <button onClick={()=>navigate("/admin/create-train")} className="btn btn-dark float-end">Create Train</button>
+                <button onClick={()=>navigate("/admin/create-vara")} className="btn btn-dark float-end">Create Vara</button>
                 <div>
                     <Table columns={columns} dataSource={tableData} />
                 </div>

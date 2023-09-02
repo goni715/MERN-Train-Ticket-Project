@@ -101,13 +101,17 @@ const SearchTrainService = async (req, res, TrainModel) => {
                 if(Bogies?.length > 0){
                     for(let i=0; i< Bogies.length; i++){
                         seats= [...seats, ...Bogies[i]?.seats];
-                        totalSeats += Bogies[i]?.totalSeats;
+                        //totalSeats += Bogies[i]?.totalSeats;
                     }
                 }
 
                 if(seats.length > 0){
+                    let result3 = seats.filter(({stations})=> {
+                        return stations.includes(from) === stations.includes(to);
+                    })
+                    totalSeats=result3.length;
                     const result2 = seats.filter(({unavailableDates})=> {
-                        return unavailableDates?.find((cv)=> cv.date === `${date}-${order}`);
+                        return unavailableDates?.find((cv)=> cv.date === `${date}-${from}-${to}`);
                     })
                     bookSeats=result2.length;
                 }
@@ -132,51 +136,6 @@ const SearchTrainService = async (req, res, TrainModel) => {
                 }
             })
         }
-
-
-    /*
-       let seats = [];
-        let Bogies = [];
-
-        if(bogies?.length > 0){
-          for(let i=0; i< bogies.length; i++){
-              Bogies = [...Bogies, ...bogies[i]?.Bogies]
-              //console.log(bogies[i]?.Bogies)
-          }
-
-        }
-
-        console.log(Bogies);
-        if(Bogies.length >0 ){
-            for(let i=0; i < Bogies.length; i++){
-                Bogies[i].totalSeats = Bogies[i].seats.length;
-            }
-        }
-
-        console.log(seats)
-
-     */
-
-
-
-
-        /*
-        if(classes?.length > 0){
-            for(let i=0; i < classes.length; i++){
-                let result = await VaraModel.aggregate([
-                    {$match: {
-                            classId: new ObjectId(classes[i]._id),
-                            fromToCity:{ $all: [from, to]}
-                        }
-                    }
-                ])
-                if(result.length > 0){
-                    varaArray.push(result[0])
-                }
-            }
-        }
-
-         */
 
 
 

@@ -44,8 +44,9 @@ const BogieLists = ({bogies}) => {
 
     return (
         <>
+
             <div className="d-flex gap-3">
-            {bogies && (
+            {bogies?.length >0 && (
                 bogies
                 .slice()
                     .sort((a,b)=>sorting(a,b))
@@ -69,12 +70,16 @@ const BogieLists = ({bogies}) => {
             </div>
 
             <br/><br/>
-            <div className="mt-2">
+            <div className="row">
+                <div className="col-4">
+             <div className="mt-2-5">
                 {
                     seats.length > 0 && (
                         <Seats seats={seats}/>
                     )
                 }
+            </div>
+                </div>
             </div>
 
 

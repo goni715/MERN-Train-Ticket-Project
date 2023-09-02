@@ -19,6 +19,7 @@ const BogieSchema = new mongoose.Schema(
         seats: [
             {
                 number: String,
+                stations:[],
                 unavailableDates: [
                     {date:String, name:String}
                 ]

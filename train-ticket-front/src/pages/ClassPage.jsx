@@ -2,12 +2,11 @@ import {useParams} from "react-router-dom";
 import {useGetClassQuery} from "../redux/features/class/classApi.js";
 import BogieLists from "../components/Bogie/BogieLists.jsx";
 import Navigation from "../components/navigation/Navigation.jsx";
-import {useState} from "react";
 import {useSelector} from "react-redux";
 
 const ClassPage = () => {
-    const {id, from, to, date, order} = useParams();
-    const {data, isLoading, isError} = useGetClassQuery({id, from, to, date:`${date}-${order}`});
+    const {id, from, to, date} = useParams();
+    const {data, isLoading, isError} = useGetClassQuery({id, from, to, date:`${date}`});
     const classData = data?.data;
     const {name, Bogies} = classData || {};
     const {vara,} = data || {};
@@ -18,7 +17,7 @@ const ClassPage = () => {
     return (
         <>
             <Navigation/>
-            <div className="p-5">
+            <div className="px-5">
                 <h1>ClassName: {name}</h1>
                 <h1>Vara: {vara} Taka</h1>
                 <h3>seats: {totalSeats}</h3>

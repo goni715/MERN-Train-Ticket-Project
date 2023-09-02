@@ -23,27 +23,21 @@ const GetClassService = async (req, res, ClassModel) => {
 
         //find all seats & find total seats part
         const Bogies = data[0]?.Bogies;
-        let seats = [];
         let totalSeats = 0;
+        let seats = [];
         let bookSeats;
 
         if(Bogies?.length > 0){
            for(let i=0; i< Bogies.length; i++){
                seats= [...seats, ...Bogies[i]?.seats];
+               totalSeats += Bogies[i]?.totalSeats;
            }
         }
 
 
         if(seats.length > 0){
-
-            let result3 = seats.filter(({stations})=> {
-                return stations.includes(from) === stations.includes(to);
-            })
-            totalSeats=result3.length;
-
-
             const result2 = seats.filter(({unavailableDates})=> {
-                return unavailableDates?.find((cv)=> cv.date === `${date}-${from}-${to}`);
+                return unavailableDates?.find((cv)=> cv.date === date);
             })
             bookSeats=result2.length;
         }
@@ -55,22 +49,15 @@ const GetClassService = async (req, res, ClassModel) => {
         if(Bogies?.length > 0){
             for(let i=0; i< Bogies.length; i++){
                 let bogieSeats = Bogies[i]?.seats;
-                let bogieTotalSeats = 0;
                 let bogieBookSeats;
 
                 if(bogieSeats.length >0){
-
-                    let result4 = bogieSeats.filter(({stations})=> {
-                        return stations.includes(from) === stations.includes(to);
-                    })
-                    bogieTotalSeats=result4.length;
-
                     let result = bogieSeats.filter(({unavailableDates})=> {
-                        return unavailableDates?.find((cv)=> cv.date === `${date}-${from}-${to}`);
+                        return unavailableDates?.find((cv)=> cv.date === date);
                     })
                     bogieBookSeats=result.length;
                 }
-                Bogies[i].FakaSeats= Number(bogieTotalSeats- Number(bogieBookSeats));
+                Bogies[i].FakaSeats= Number(Bogies[i]?.totalSeats- Number(bogieBookSeats));
             }
         }
         //Bogie Faka Seats part ended

@@ -5,6 +5,9 @@ import {SetAuthError, SetSeats} from "../auth/authSlice.js";
 
 export const classApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getClasses: builder.query({
+            query: () => `/class/get-all-classes`,
+        }),
         getClass: builder.query({
             query: ({id, from, to, date}) => `/class/get-class/${id}/${from}/${to}/${date}`,
             providesTags: ["Classes"],
@@ -22,4 +25,4 @@ export const classApi = apiSlice.injectEndpoints({
     }),
 })
 
-export const { useGetClassQuery } = classApi;
+export const { useGetClassQuery, useGetClassesQuery } = classApi;

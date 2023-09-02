@@ -1,12 +1,10 @@
 import {useParams} from "react-router-dom";
 import {useBookingSeatMutation} from "../../redux/features/bogie/bogieApi.js";
-import {useDispatch} from "react-redux";
-import {SeatBook} from "../../redux/features/auth/authSlice.js";
 
 const Seat = ({item}) => {
-    const {id,date, order} = useParams();
-    const dispatch = useDispatch();
+    const {id,from, to,date} = useParams();
     const [bookingSeat, {isLoading, isSuccess}] = useBookingSeatMutation();
+    const {_id,unavailableDates, stations, number} = item || {};
 
     const handleBooking = (seatId) => {
        bookingSeat({
@@ -14,22 +12,24 @@ const Seat = ({item}) => {
             classId:id,
             data: {
                 name: "Marjan Hossain",
-                date:`${date}-${order}`
+                date:`${date}-${from}-${to}`
             }
        })
-
-        dispatch(SeatBook());
     }
 
 
     return(
         <>
             <button
-                onClick={()=>handleBooking(item?._id)}
-                className={item?.unavailableDates.find((cv)=> cv.date === `${date}-${order}`) && "btn btn-danger" || "btn btn-success"}
-                disabled={item?.unavailableDates.find((cv)=> cv.date === `${date}-${order}`) || isLoading }
+                onClick={()=>handleBooking(_id)}
+                className={
+                    (unavailableDates.find((cv)=> cv.date === `${date}-${from}-${to}`) || stations.includes(from) !== stations.includes(to))  && "btn btn-danger button" || "btn btn-success button"
+                }
+                disabled={
+                    (unavailableDates.find((cv)=> cv.date === `${date}-${from}-${to}`) || stations.includes(from) !== stations.includes(to)) || isLoading
+               }
             >
-                {item?.number}
+                {number}
             </button>
         </>
     )
